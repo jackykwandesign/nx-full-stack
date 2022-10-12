@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../../../node_modules/.prisma/prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("SQLITE_TEST_SOURCE_URL")
+}
+
+generator nestgraphql {
+  provider               = "prisma-nestjs-graphql"
+  output                 = "../../../generated/db-types/src"
+  field_Validator_from   = "class-validator"
+  field_Validator_input  = true
+  field_Validator_output = true
+  emitSingle             = true
+}
+
+model User {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  name  String
+  title String
+  sex   String
+}
